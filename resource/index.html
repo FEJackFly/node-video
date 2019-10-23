@@ -1,216 +1,233 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>视频平台</title>
-    <link rel="stylesheet" href="./css/style.css">
-    <link rel="stylesheet" href="./plugs/datetimepicker/jquery.datetimepicker.css">
+    <link rel="stylesheet" href="./css/style.css" />
+    <link
+      rel="stylesheet"
+      href="./plugs/datetimepicker/jquery.datetimepicker.css"
+    />
     <style>
-        html,
-        body {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            background-color: rgb(36, 49, 84);
-            color: #dadada;
-            overflow: hidden;
-        }
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: rgb(36, 49, 84);
+        color: #dadada;
+        overflow: hidden;
+      }
 
-        .header {
-            width: 100%;
-            height: 50px;
-            line-height: 50px;
-            padding: 0 30px;
-            font-size: 18px;
-            font-weight: 900;
-        }
+      .header {
+        width: 100%;
+        height: 50px;
+        line-height: 50px;
+        padding: 0 30px;
+        font-size: 18px;
+        font-weight: 900;
+      }
 
-        .content {
-            width: 100%;
-            height: calc(100% - 50px);
-        }
+      .content {
+        width: 100%;
+        height: calc(100% - 50px);
+      }
 
-        .videoView {
-            width: calc(100% - 400px);
-            height: 100%;
-            float: left;
-            overflow: hidden;
-            border-top: 2px solid #1b2b50;
+      .videoView {
+        width: calc(100% - 400px);
+        height: 100%;
+        float: left;
+        overflow: hidden;
+        border-top: 2px solid #1b2b50;
+      }
 
-        }
+      #videoTool {
+        height: 80px;
+        overflow: hidden;
+        line-height: 50px;
+        margin: 0 30px;
+        box-sizing: border-box;
+      }
 
-        #videoTool {
-            height: 80px;
-            overflow: hidden;
-            line-height: 50px;
-            margin: 0 30px;
-            box-sizing: border-box;
-        }
+      #video {
+        width: calc(100% - 80px);
+        height: calc(100% - 200px);
+        background-color: rgba(0, 0, 0, 0.5);
+        margin: 0 30px;
+        border-radius: 5px;
+        /* box-shadow: 16px 14px 20px 0px #01094a; */
+        box-shadow: 20px 20px 20px 0px #000000;
+        overflow: hidden;
+      }
 
-        #video {
-            width: calc(100% - 80px);
-            height: calc(100% - 200px);
-            background-color: rgba(0, 0, 0, 0.5);
-            margin: 0 30px;
-            border-radius: 5px;
-            /* box-shadow: 16px 14px 20px 0px #01094a; */
-            box-shadow: 20px 20px 20px 0px #000000;
-            overflow: hidden;
-        }
+      canvas {
+        width: 100%;
+        height: 100%;
+        float: left;
+        background-color: rgb(112, 112, 112);
+      }
 
-        canvas {
-            width: 100%;
-            height: 100%;
-            float: left;
-            background-color: rgb(112, 112, 112)
-        }
+      .IPCList {
+        width: 400px;
+        height: 100%;
+        float: left;
+        background-color: #1a2544;
+        overflow: hidden;
+      }
 
-        .IPCList {
-            width: 400px;
-            height: 100%;
-            float: left;
-            background-color: #1a2544;
-            overflow: hidden;
-        }
+      #videoTool {
+        position: relative;
+        padding-top: 15px;
+      }
 
-        #videoTool {
-            position: relative;
-            padding-top: 15px
-        }
+      #ipcListUl {
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+      }
 
-        #ipcListUl {
-            width: 100%;
-            height: 100%;
-            overflow: auto
-        }
+      #videoTool ul li {
+        display: inline-block;
+        padding: 2px 12px 2px 30px;
+        border: 1px solid #9098b2;
+        border-radius: 5px;
+        height: 25px;
+        line-height: 18px;
+        margin-right: 10px;
+        background-image: url('https://www.jlrbjb.com/static/images/search.png');
+        background-repeat: no-repeat;
+        background-position: 10px center;
+        background-size: 12px;
+        font-size: 12px;
+        cursor: pointer;
+      }
 
-        #videoTool ul li {
-            display: inline-block;
-            padding: 2px 12px 2px 30px;
-            border: 1px solid #9098b2;
-            border-radius: 5px;
-            height: 25px;
-            line-height: 18px;
-            margin-right: 10px;
-            background-image: url('https://www.jlrbjb.com/static/images/search.png');
-            background-repeat: no-repeat;
-            background-position: 10px center;
-            background-size: 12px;
-            font-size: 12px;
-            cursor: pointer;
-        }
+      #videoTool ul.rightUl li {
+        padding-right: 40px;
+      }
 
-        #videoTool ul.rightUl li {
-            padding-right: 40px
-        }
+      #videoTool ul.rightUl li a {
+        border-left: 1px solid #a2b7ef;
+        padding-left: 10px;
+      }
 
-        #videoTool ul.rightUl li a {
-            border-left: 1px solid #a2b7ef;
-            padding-left: 10px
-        }
+      #videoTool ul.leftUl li.on {
+        background-color: #1890ff;
+      }
 
-        #videoTool ul.leftUl li.on {
-            background-color: #1890ff
-        }
+      #videoTool ul.rightUl li.on {
+        background-color: #7990de;
+      }
 
-        #videoTool ul.rightUl li.on {
-            background-color: #7990de
-        }
+      #videoTool ul li a {
+        color: #c6d5ef;
+      }
 
-        #videoTool ul li a {
-            color: #c6d5ef
-        }
+      #videoTool .rightUl {
+        position: absolute;
+        right: 10px;
+        top: 15px;
+      }
 
-        #videoTool .rightUl {
-            position: absolute;
-            right: 10px;
-            top: 15px;
-        }
+      .IPCList ul li {
+        width: 100%;
+        overflow: hidden;
+        padding: 10px 35px;
+        border-bottom: 1px solid #29324f;
+      }
 
-        .IPCList ul li {
-            width: 100%;
-            overflow: hidden;
-            padding: 10px 35px;
-            border-bottom: 1px solid #29324f
-        }
+      .IPCList ul li > div {
+        float: left;
+        font-size: 12px;
+      }
 
-        .IPCList ul li>div {
-            float: left;
-            font-size: 12px
-        }
+      .IPCList ul li > div img {
+        width: 50px;
+        margin-right: 40px;
+      }
 
-        .IPCList ul li>div img {
-            width: 50px;
-            margin-right: 40px
-        }
+      .timeIput {
+        background: rgba(0, 0, 0, 0.02);
+        border: none;
+        color: #fff;
+        padding: 3px;
+      }
 
-        .timeIput {
-            background: rgba(0, 0, 0, .02);
-            border: none;
-            color: #fff;
-            padding: 3px;
-        }
+      .playIng {
+        width: 40px;
+        height: 40px;
+        float: right !important;
+        background-image: url('./video.png');
+        background-repeat: no-repeat;
+        background-position: 10px center;
+        background-size: 25px;
+        display: none;
+      }
 
-        .playIng {
-            width: 40px;
-            height: 40px;
-            float: right !important;
-            background-image: url('./video.png');
-            background-repeat: no-repeat;
-            background-position: 10px center;
-            background-size: 25px;
-            display: none;
-        }
-
-        .show .playIng {
-            display: inline;
-        }
+      .show .playIng {
+        display: inline;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="header">
-        VideoServer | 视频平台
+      VideoServer | 视频平台
     </div>
     <div class="content">
-        <div class="videoView">
-            <div id="videoTool">
-                <ul class="leftUl">
-                    <li>开始时间：<input id="startTime" class="timeIput" type="text"></li>
-                    <li>结束时间：<input id="endTime" class="timeIput" type="text"></li>
-                    <li class="on" onclick="hisPlay()">播放</li>
-
-                </ul>
-                <ul class="rightUl">
-                    <li class="on"><a href="">工具栏</a></li>
-                    <li>通道号：<span id="channel">0</span></li>
-
-                </ul>
-            </div>
-
-            <div id="video">
-                <canvas id="video-canvas">
-                </canvas>
-
-            </div>
+      <div class="videoView">
+        <div id="videoTool">
+          <ul class="leftUl">
+            <li>
+              开始时间：<input id="startTime" class="timeIput" type="text" />
+            </li>
+            <li>
+              结束时间：<input id="endTime" class="timeIput" type="text" />
+            </li>
+            <li class="on" onclick="hisPlay()">播放</li>
+          </ul>
+          <ul class="rightUl">
+            <li class="on"><a href="">工具栏</a></li>
+            <li>通道号：<span id="channel">0</span></li>
+          </ul>
         </div>
-        <ul class='pie'>
-            <li class='slice-one slice hvr-fade' code="21"><img src="top.png" alt=""></li>
-            <li class='slice-two slice hvr-fade' code="26"> <img src="top.png" alt=""></li>
-            <li class='slice-three slice hvr-fade' code="24"> <img src="top.png" alt=""></li>
-            <li class='slice-four slice hvr-fade' code="28"> <img src="top.png" alt=""></li>
-            <li class='slice-five slice hvr-fade' code="22"><img src="top.png" alt=""> </li>
-            <li class='slice-six slice hvr-fade' code="27"> <img src="top.png" alt=""></li>
-            <li class='slice-seven slice hvr-fade' code="23"><img src="top.png" alt=""> </li>
-            <li class='slice-eight slice hvr-fade' code="25"> <img src="top.png" alt=""></li>
-            <div class="center"></div>
-        </ul>
-        <div class="IPCList">
-            <ul id="ipcListUl">
-                <!-- <li>
+
+        <div id="video">
+          <canvas id="video-canvas"> </canvas>
+        </div>
+      </div>
+      <ul class="pie">
+        <li class="slice-one slice hvr-fade" code="21">
+          <img src="top.png" alt="" />
+        </li>
+        <li class="slice-two slice hvr-fade" code="26">
+          <img src="top.png" alt="" />
+        </li>
+        <li class="slice-three slice hvr-fade" code="24">
+          <img src="top.png" alt="" />
+        </li>
+        <li class="slice-four slice hvr-fade" code="28">
+          <img src="top.png" alt="" />
+        </li>
+        <li class="slice-five slice hvr-fade" code="22">
+          <img src="top.png" alt="" />
+        </li>
+        <li class="slice-six slice hvr-fade" code="27">
+          <img src="top.png" alt="" />
+        </li>
+        <li class="slice-seven slice hvr-fade" code="23">
+          <img src="top.png" alt="" />
+        </li>
+        <li class="slice-eight slice hvr-fade" code="25">
+          <img src="top.png" alt="" />
+        </li>
+        <div class="center"></div>
+      </ul>
+      <div class="IPCList">
+        <ul id="ipcListUl">
+          <!-- <li>
                     <div>
                         <img src="https://www.jlrbjb.com/uploads/20180818065b77fc008e5b5.jpg">
                     </div>
@@ -221,185 +238,196 @@
                     </div>
                     <div class="playIng"></div>
                 </li> -->
-            </ul>
-        </div>
-
+        </ul>
+      </div>
     </div>
     <script src="./plugs/jquery.js"></script>
     <script src="./plugs/datetimepicker/jquery.datetimepicker.full.js"></script>
     <script src="https://jsmpeg.com/jsmpeg.min.js"></script>
     <script src="./plugs/moment.js"></script>
     <script>
-        // var url = 'ws://172.16.165.39:9999';
-        // var url = 'ws://172.16.154.160:9999';
+      // var url = 'ws://172.16.165.39:9999';
+      // var url = 'ws://172.16.154.160:9999';
 
-        // var canvas = document.getElementById('video-canvas');
-        // var player = new JSMpeg.Player(url, {
-        //     canvas: canvas
-        // });
-        var basUrl = '172.16.154.160'
-        // var basUrl = '172.16.165.39'
+      // var canvas = document.getElementById('video-canvas');
+      // var player = new JSMpeg.Player(url, {
+      //     canvas: canvas
+      // });
+      // var basUrl = '172.16.154.160'
+      var basUrl = '172.16.165.39';
 
+      $.ajax({
+        url: 'http://' + basUrl + ':8088/ipcList',
+        type: 'post',
+        success: function(res) {
+          console.log(res);
+          var html = '';
+          for (var i = 0; i < res.length; i++) {
+            html +=
+              '  <li onclick="play(' +
+              res[i].port +
+              ',' +
+              res[i].channel +
+              ')" channel="' +
+              res[i].channel +
+              '">' +
+              '                    <div>' +
+              '                        <img src="./play.png">' +
+              '                    </div>' +
+              '                    <div>' +
+              '                        <p>名称：' +
+              res[i].name +
+              '</p>' +
+              '                        <p>类型：' +
+              res[i].type +
+              '</p>' +
+              '                        <p>端口：' +
+              res[i].port +
+              '</p>' +
+              '                    </div>' +
+              '<div class="playIng"></div>' +
+              '                </li>';
+          }
+          $('#ipcListUl').html(html);
+
+          $('#ipcListUl li').click(function() {
+            var li = $('#ipcListUl li');
+            for (var i = 0; i < li.length; i++) {
+              $(li[i]).removeClass('show');
+            }
+            $(this).addClass('show');
+          });
+        },
+        error: function(res) {
+          var html = '';
+          for (var i = 0; i < 20; i++) {
+            html +=
+              '  <li onclick="play(9999)">' +
+              '                    <div>' +
+              '                        <img src="./play.png">' +
+              '                    </div>' +
+              '                    <div>' +
+              '                        <p>名称：仓库</p>' +
+              '                        <p>类型：海康</p>' +
+              '                        <p>端口：9999</p>' +
+              '                    </div>' +
+              '<div class="playIng"></div>' +
+              '                </li>';
+          }
+          $('#ipcListUl').html(html);
+
+          $('#ipcListUl li').click(function() {
+            var li = $('#ipcListUl li');
+            for (var i = 0; i < li.length; i++) {
+              $(li[i]).removeClass('show');
+            }
+            $(this).addClass('show');
+          });
+        }
+      });
+
+      var player = null;
+
+      function play(port, channel) {
+        if (player) {
+          player.destroy();
+        }
+        $('#video').html('<canvas id="video-canvas"> </canvas>');
+        var url = 'ws://' + basUrl + ':' + port;
+        var canvas = document.getElementById('video-canvas');
+        player = new JSMpeg.Player(url, {
+          canvas: canvas,
+          videoBufferSize: 1024 * 1024 * 4
+        });
+
+        $('#channel').html(channel);
+      }
+
+      function hisPlay() {
         $.ajax({
-            url: 'http://' + basUrl + ':8088/ipcList',
-            type: 'post',
-            success: function (res) {
-                console.log(res)
-                var html = "";
-                for (var i = 0; i < res.length; i++) {
-                    html += '  <li onclick="play(' + res[i].port + ',' + res[i].channel + ')" channel="' +
-                        res[i].channel +
-                        '">' +
-                        '                    <div>' +
-                        '                        <img src="./play.png">' +
-                        '                    </div>' +
-                        '                    <div>' +
-                        '                        <p>名称：' + res[i].name + '</p>' +
-                        '                        <p>类型：' + res[i].type + '</p>' +
-                        '                        <p>端口：' + res[i].port + '</p>' +
-                        '                    </div>' +
-                        '<div class="playIng"></div>' +
-                        '                </li>';
-                }
-                $('#ipcListUl').html(html);
-
-
-                $('#ipcListUl li').click(function () {
-                    var li = $('#ipcListUl li')
-                    for (var i = 0; i < li.length; i++) {
-                        $(li[i]).removeClass('show')
-                    }
-                    $(this).addClass('show');
-                })
-            },
-            error: function (res) {
-                var html = "";
-                for (var i = 0; i < 20; i++) {
-                    html += '  <li onclick="play(9999)">' +
-                        '                    <div>' +
-                        '                        <img src="./play.png">' +
-                        '                    </div>' +
-                        '                    <div>' +
-                        '                        <p>名称：仓库</p>' +
-                        '                        <p>类型：海康</p>' +
-                        '                        <p>端口：9999</p>' +
-                        '                    </div>' +
-                        '<div class="playIng"></div>' +
-                        '                </li>';
-                }
-                $('#ipcListUl').html(html);
-
-
-                $('#ipcListUl li').click(function () {
-                    var li = $('#ipcListUl li')
-                    for (var i = 0; i < li.length; i++) {
-                        $(li[i]).removeClass('show')
-                    }
-                    $(this).addClass('show');
-                })
-            }
-
-        })
-
-        var player = null;
-
-        function play(port, channel) {
-            if (player) {
-                player.destroy()
-            }
-            $('#video').html('<canvas id="video-canvas"> </canvas>')
-            var url = 'ws://' + basUrl + ':' + port;
+          url: 'http://' + basUrl + ':8088/getHis',
+          type: 'post',
+          data: {
+            channel: $('#channel').html()
+          },
+          success: function(res) {
+            console.log(res);
+            $('#video').html('<canvas id="video-canvas"> </canvas>');
+            var url = 'ws://' + basUrl + ':' + 9999;
             var canvas = document.getElementById('video-canvas');
             player = new JSMpeg.Player(url, {
-                canvas: canvas,
-                videoBufferSize: 1024 * 1024 * 4
+              canvas: canvas,
+              videoBufferSize: 1024 * 1024 * 4
             });
-
-            $('#channel').html(channel)
-        }
-
-        function hisPlay() {
-            $.ajax({
-                url: 'http://' + basUrl + ':8088/getHis',
-                type: 'post',
-                data: {
-                    channel: $('#channel').html()
-                },
-                success: function (res) {
-                    console.log(res)
-                    $('#video').html('<canvas id="video-canvas"> </canvas>')
-                    var url = 'ws://' + basUrl + ':' + 9999;
-                    var canvas = document.getElementById('video-canvas');
-                    player = new JSMpeg.Player(url, {
-                        canvas: canvas,
-                        videoBufferSize: 1024 * 1024 * 4
-                    });
-                }
-
-            })
-        }
-        $('.slice').mousedown(function () {
-            var code = $(this).attr('code');
-            var data = {
-                rtspUrl: 'rtsp://admin:Admin123@172.16.152.37:554/h264/ch33/main/av_stream',
-                preset: code,
-                deviceCode: 100,
-                stop: 0
-            }
-            data = JSON.stringify(data)
-            $.ajax({
-                url: 'http://172.16.151.221:8080/linkage/openApi/ptzByRtsp',
-                type: 'post',
-                contentType: 'application/json;charset=utf-8',
-                data: data
-            })
-        })
-        $('.slice').mouseup(function () {
-            var code = $(this).attr('code')
-            var data = {
-                rtspUrl: 'rtsp://admin:Admin123@172.16.152.37:554/h264/ch33/main/av_stream',
-                preset: code,
-                deviceCode: 100,
-                stop: 1
-            }
-            data = JSON.stringify(data)
-            $.ajax({
-                url: 'http://172.16.151.221:8080/linkage/openApi/ptzByRtsp',
-                type: 'post',
-                contentType: 'application/json;charset=utf-8',
-                data: data
-            })
-        })
-
-        jQuery.datetimepicker.setLocale('zh');
-
-        jQuery('#startTime').datetimepicker({
-            minDate: '-1970/01/02',
-            maxDate: 0,
-            roundTime: 'floor',
-            // mask: true,
-            // theme: 'dark',
-            onChangeDateTime: function (dp, $input) {
-                console.log(new Date(dp).getTime())
-                console.log($input.val())
-            }
+          }
         });
-        jQuery('#endTime').datetimepicker({
-            minDate: '-1970/01/02',
-            maxDate: 0,
-            // theme: 'dark',
-            onChangeDateTime: function (dp, $input) {
-                console.log(new Date(dp).getTime())
-                console.log($input.val())
-            }
-
+      }
+      $('.slice').mousedown(function() {
+        var code = $(this).attr('code');
+        var data = {
+          rtspUrl:
+            'rtsp://admin:Admin123@172.16.152.37:554/h264/ch33/main/av_stream',
+          preset: code,
+          deviceCode: 100,
+          stop: 0
+        };
+        data = JSON.stringify(data);
+        $.ajax({
+          url: 'http://172.16.151.221:8080/linkage/openApi/ptzByRtsp',
+          type: 'post',
+          contentType: 'application/json;charset=utf-8',
+          data: data
         });
-        moment.locale('zh-cn')
-        var startTime = moment().subtract(1, 'days').format('YYYYMMDDthhmmss'); // 昨天下午2点47分
-        var endTime = moment().subtract(0, 'days').format('YYYYMMDDthhmmss');
-        $('#startTime').val(startTime)
-        $('#endTime').val(endTime)
+      });
+      $('.slice').mouseup(function() {
+        var code = $(this).attr('code');
+        var data = {
+          rtspUrl:
+            'rtsp://admin:Admin123@172.16.152.37:554/h264/ch33/main/av_stream',
+          preset: code,
+          deviceCode: 100,
+          stop: 1
+        };
+        data = JSON.stringify(data);
+        $.ajax({
+          url: 'http://172.16.151.221:8080/linkage/openApi/ptzByRtsp',
+          type: 'post',
+          contentType: 'application/json;charset=utf-8',
+          data: data
+        });
+      });
+
+      jQuery.datetimepicker.setLocale('zh');
+
+      jQuery('#startTime').datetimepicker({
+        minDate: '-1970/01/02',
+        maxDate: 0,
+        roundTime: 'floor',
+        // mask: true,
+        // theme: 'dark',
+        onChangeDateTime: function(dp, $input) {
+          console.log(new Date(dp).getTime());
+          console.log($input.val());
+        }
+      });
+      jQuery('#endTime').datetimepicker({
+        minDate: '-1970/01/02',
+        maxDate: 0,
+        // theme: 'dark',
+        onChangeDateTime: function(dp, $input) {
+          console.log(new Date(dp).getTime());
+          console.log($input.val());
+        }
+      });
+      moment.locale('zh-cn');
+      var startTime = moment()
+        .subtract(1, 'days')
+        .format('YYYYMMDDthhmmss'); // 昨天下午2点47分
+      var endTime = moment()
+        .subtract(0, 'days')
+        .format('YYYYMMDDthhmmss');
+      $('#startTime').val(startTime);
+      $('#endTime').val(endTime);
     </script>
-</body>
-
+  </body>
 </html>
